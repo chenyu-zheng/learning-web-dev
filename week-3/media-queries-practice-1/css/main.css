@@ -1,0 +1,30 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+@media screen and (min-width: 500px) {
+  img {
+    width: initial;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  img {
+    display: inline-block;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  img {
+    width: 25%;
+  }
+}

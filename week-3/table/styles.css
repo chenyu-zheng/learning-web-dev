@@ -1,0 +1,40 @@
+
+
+.table{
+    display: table;
+}
+.talbe_caption{
+    display: table-caption;
+}
+.table_row{
+    display: table-row;
+}
+.table_head, .table_data{
+    display: table-cell;
+}
+
+.table, .table_head, .table_data{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.table_head{
+    font-weight: bold;
+}
+
+.table_head, .table_data{
+    padding: 5px 8px;
+    text-align: left;
+}
+
+.table_caption{
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 5px;
+}
+
+@media screen and (max-width: 680px) {
+    .table, .table_caption, .table_head, .table_row, .table_data{
+        
+    }
+}

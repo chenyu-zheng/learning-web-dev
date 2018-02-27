@@ -1,0 +1,56 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+}
+
+.hero-container {
+    height: 50vw;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.small-list {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.small-container {
+    width: 64vw;
+    height: 32vw;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+@media screen and (min-width: 640px) {
+    .small-list {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .small-container {
+        width: 200px;
+        height: 100px;
+    }
+}
+
+@media screen and (min-width: 980px) {
+    .container {
+        max-width: 980px;
+        margin: 0 auto;
+    }
+    .hero-container {
+        height: 380px;
+    }
+}

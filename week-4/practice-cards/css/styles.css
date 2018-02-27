@@ -1,0 +1,76 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: rgb(206, 158, 158);
+    background-image: url("https://cdn.pixabay.com/photo/2017/08/31/04/01/d20-2699387_960_720.png");
+    background-size: 100px 100px;
+    background-repeat: repeat;
+    background-blend-mode: lighten;
+}
+
+.container {
+    font-family: 'Averia Serif Libre', cursive, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card {
+    box-sizing: border-box;
+    width: 280px;
+    padding: 15px;
+    margin: 20px;
+    background-color: bisque;
+    border: 1px solid rgb(119, 36, 36);
+    border-radius: 5px;
+    box-shadow: -4px -4px 3px 0 gray;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: overlay;
+}
+
+.card-img {
+    overflow: hidden;
+    height: 200px;
+    border-radius: 4px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.name {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.fact-list {
+    padding-left: 20px;
+}
+
+.description {
+    font-size: 0.9em;
+}
+
+@media screen and (max-width: 360px) {
+    .card-img {
+        width: 66vw;
+        height: 55vw;
+    }
+}
+
+.card1{
+    background-image: url("https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/185/1000/1000/636252762168821795.jpeg");   
+}
+
+.card2{
+    background-image: url("https://i.pinimg.com/736x/f8/ee/64/f8ee640c0e77e0c9820743d221b1242d--joe-madureira-comic-art-community.jpg");   
+}
+
+.card3{
+    background-image: url("https://d1u5p3l4wpay3k.cloudfront.net/hearthstone_gamepedia/thumb/a/af/Keening_Banshee_full.jpg/450px-Keening_Banshee_full.jpg?version=078351a1a647c907482e8aadaf15dbc8");   
+}

@@ -1,0 +1,40 @@
+.btn_apple{
+    width: 300px;
+    height: 70px;
+    background-color: rgb(189, 188, 188);
+    /* border: none; */
+    color: black;
+    text-decoration: none;
+    font-size: 40px;
+    margin: 8px 4px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.btn_apple:hover{
+    background-color: rgb(48, 48, 48);
+    color: white;
+
+}
+
+.btn_google{
+    width: 300px;
+    height: 70px;
+    background-color: rgb(102, 93, 231);
+    color: white;
+    font-size: 40px;
+    margin: 8px 4px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    text-align: left;
+}
+
+.text_google{
+    margin-left: 40px;
+}
+
+.btn_google:hover{
+    background-color: rgb(34, 14, 148);
+    color: rgb(126, 126, 126);
+}
+
