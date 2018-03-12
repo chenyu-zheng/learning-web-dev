@@ -5,7 +5,7 @@ let curr = 0;
 
 let intervalId;
 
-for (i = 0; i < images.length; i++) {
+for (let i = 0; i < images.length; i++) {
     if (i !== curr) {
         images[i].style.display = "none";
     }
