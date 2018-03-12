@@ -19,7 +19,7 @@ play();
 
 
 function play() {
-    intervalId = setInterval(switchImg, 3000);
+    intervalId = setInterval(switchImg, 4000);
 }
 
 function stop() {
@@ -35,7 +35,7 @@ function switchImg() {
     let opa = 100;
     let sInterId = setInterval(
         function () {
-            opa -= 10;
+            opa -= 5;
             images[curr].style.opacity = opa / 100;
             images[next].style.opacity = 1 - opa / 100;
             images[next].style.display = "block";
@@ -48,6 +48,6 @@ function switchImg() {
                 }
             }
         },
-        100
+        50
     );
 }
