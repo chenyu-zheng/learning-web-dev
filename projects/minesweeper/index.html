@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Minesweeper</h1>
+        <div class="menu">
+            <div class="counter-mine">
+                <img src="img/mine-32x32x32.png">
+                <span id="mine-text" class="mine-text">0</span>
+            </div>
+            <div class="counter-time">
+                <img src="img/clock-32x32.png">
+                <span id="time-text" class="time-text">0</span>
+            </div>
+            <button id="button-start" class="button-start">
+                <img src="img/face-smile-48x48x32.png">
+            </button>
+            <form class="levels">
+                <input type="radio" name="level" id="level-easy" value="easy">
+                <label for="level-easy">Easy</label>
+                <input type="radio" name="level" id="level-normal" value="normal">
+                <label for="level-normal">Easy</label>
+                <input type="radio" name="level" id="level-hard" value="hard">
+                <label for="level-hard">Easy</label>
+            </form>
+        </div>
+        <table id="game-table" class="game-table" oncontextmenu="return false;">
+
+        </table>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
