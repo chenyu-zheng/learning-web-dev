@@ -4,16 +4,17 @@ const levels = {
     hard: new GameLevel(16, 30, 99)
 };
 
-const gameView = new GameView();
+const gameView = new GameView(
+    document.getElementById("game-table"),
+    document.getElementById("button-start"),
+    document.getElementById("level-selector").level,
+    document.getElementById("time-text"),
+    document.getElementById("mine-text")
+);
 
 gameView.game = new Game();
 
-gameView.table = document.getElementById("game-table");
-gameView.timer = document.getElementById("time-text");
-gameView.counter = document.getElementById("mine-text");
-gameView.startBtn = document.getElementById("button-start");
-
-gameView.reset(levels.easy);
+gameView.reset();
 
 
 
@@ -21,17 +22,25 @@ gameView.reset(levels.easy);
 // Web 
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-function GameView() {
+function GameView(table, startBtn, levelInputs, timer, counter) {
 
     this.game;
-    this.table;
-    this.startBtn;
-    this.levelForm;
-    this.timer;
-    this.counter;
+    this.table = table;
+    this.startBtn = startBtn;
+    this.levelInputs = levelInputs;
+    this.timer = timer;
+    this.counter = counter;
     this.timerId;
 
-    this.reset = function (gameLevel) {
+
+    this.reset = function () {
+
+        let gameLevel;
+        for (v of this.levelInputs) {
+            if (v.checked) {
+                gameLevel = levels[v.value];
+            }
+        }
 
         this.game.reset(gameLevel);
 
@@ -41,9 +50,8 @@ function GameView() {
         if (this.timerId !== undefined) {
             window.clearInterval(this.timerId);
             this.timerId = undefined;
+            this.timer.textContent = "0"
         }
-        this.updateCounter();
-
 
         for (let i = 0; i < gameLevel.nRow; ++i) {
             tbl.appendChild(document.createElement("tr"));
@@ -53,22 +61,48 @@ function GameView() {
             for (let j = 0; j < gameLevel.nCol; ++j) {
                 tr.appendChild(document.createElement("td"));
                 tr.lastChild.setAttribute("col", j);
-                tr.lastChild.style.backgroundColor = "rgb(120, 120, 120)";
+                tr.lastChild.style.backgroundColor = "rgb(200, 200, 200)";
             }
         }
 
-        tbl.addEventListener("click", this.reveal.bind(this));
-
-        tbl.addEventListener("auxclick", this.mark.bind(this));
+        this.updateCounter();
+        this.updateStartBtn();
     }
 
-    this.updateUnit = function (row, col, gameUnit) {
+    this.endGame = function () {
+        window.clearInterval(this.timerId);
+        this.updateCounter();
+        this.updateStartBtn();
+        for (row of this.game.units) {
+            for (unit of row) {
+                this.updateUnit(unit);
+            }
+        }
+    }
+
+    this.updateUnit = function (gameUnit) {
         const td = document.querySelector(
-            `#${this.table.getAttribute('id')} tr[row='${row.toString()}'] td[col='${col.toString()}']`
+            `#${this.table.getAttribute('id')} tr[row='${gameUnit.row.toString()}'] td[col='${gameUnit.col.toString()}']`
         );
+        if (this.game.isEnded && !gameUnit.isRevealed) {
+            if (this.game.isWinning) {
+                if (gameUnit.hasMine) {
+                    td.innerHTML = '<img src="img/flag-24x24x32.png">';
+                }
+            } else {
+                if (gameUnit.hasMine && !gameUnit.isFlagged) {
+                    td.innerHTML = '<img src="img/mine-24x24x32.png">';
+                }
+                if (!gameUnit.hasMine && gameUnit.isFlagged) {
+                    td.appendChild(document.createElement("img"));
+                    td.lastElementChild.src = "img/cross-24x24.png";
+                }
+            }
+            return;
+        }
 
         if (gameUnit.isFlagged) {
-            td.innerHTML = '<img src="img/flag-32x32x32.png">';
+            td.innerHTML = '<img src="img/flag-24x24x32.png">';
         }
         if (gameUnit.isQuestioned) {
             td.innerHTML = "?";
@@ -81,16 +115,15 @@ function GameView() {
 
         if (gameUnit.isRevealed) {
             td.style.backgroundColor = "rgb(230, 230, 230)";
+            td.style.border = "2px solid rgb(230, 230, 230)"
             const n = gameUnit.mineCount
+
             if (!gameUnit.hasMine && n > 0) {
                 td.innerHTML = n;
                 td.setAttribute("class", "color-" + n)
             }
             if (gameUnit.hasMine) {
-                td.innerHTML = '<img src="img/mine-32x32x32.png">';
-            }
-            if (gameUnit.hasMine) {
-                td.innerHTML = '<img src="img/mine-red-32x32x32.png">';
+                td.innerHTML = '<img src="img/mine-red-24x24x32.png">';
             }
         }
     }
@@ -107,22 +140,39 @@ function GameView() {
         }
     }
 
+    this.updateStartBtn = function () {
+        if (this.game.isEnded) {
+            if (this.game.isWinning) {
+                this.startBtn.lastElementChild.src = "img/face-win-48x48x32.png";
+            } else {
+                this.startBtn.lastElementChild.src = "img/face-lose-48x48x32.png";
+            }
+        } else {
+            this.startBtn.lastElementChild.src = "img/face-smile-48x48x32.png";
+        }
+    }
+
     this.reveal = function (evt) {
         let tgt = evt.target;
         if (tgt.tagName === "IMG") {
             tgt = tgt.parentNode;
         }
+
+        if (tgt.tagName !== "TD") { //Prevent clicking on the "gaps" between TDs
+            // console.log("MouseEvent:");
+            // console.log(evt);
+            return;
+        }
+
         const row = Number.parseInt(tgt.parentNode.getAttribute("row"));
         const col = Number.parseInt(tgt.getAttribute("col"));
         this.game.reveal(row, col, this.updateUnit.bind(this));
 
         if (this.timerId === undefined) {
             this.timerId = window.setInterval(this.updateTimer.bind(this), 1000);
-        } else {
-            if (this.game.isEnded) {
-                window.clearInterval(this.timerId);
-                this.updateCounter();
-            }
+        }
+        if (this.game.isEnded) {
+            this.endGame();
         }
     }
 
@@ -131,14 +181,25 @@ function GameView() {
         if (tgt.tagName === "IMG") {
             tgt = tgt.parentNode;
         }
+
+        if (tgt.tagName !== "TD") { //Prevent clicking on the "gaps" between TDs
+            return;
+        }
+
         let row = Number.parseInt(tgt.parentNode.getAttribute("row"));
         let col = Number.parseInt(tgt.getAttribute("col"));
         this.game.mark(row, col, this.updateUnit.bind(this));
         this.updateCounter();
         if (this.game.isEnded) {
-            window.clearInterval(this.timerId);
+            this.endGame();
         }
     }
+
+    this.table.addEventListener("click", this.reveal.bind(this));
+
+    this.table.addEventListener("auxclick", this.mark.bind(this));
+
+    this.startBtn.addEventListener("click", this.reset.bind(this));
 }
 
 
@@ -222,6 +283,7 @@ function Game() {
     }
 
     this.reset = function (gameLevel) {
+        this.units = [];
         this.createUnits(gameLevel.nRow, gameLevel.nCol);
         this.distributeMines(gameLevel);
         this.mine = gameLevel.nMine;
@@ -254,7 +316,7 @@ function Game() {
 
         if (unit.hasMine) {
             this.isEnded = true;
-            callback(row, col, unit)
+            callback(unit)
             return;
         }
 
@@ -271,7 +333,7 @@ function Game() {
             this.isEnded = true;
         }
 
-        callback(row, col, unit)
+        callback(unit)
     }
 
 
@@ -304,7 +366,7 @@ function Game() {
             this.isEnded = true;
         }
 
-        callback(row, col, this.units[row][col]);
+        callback(this.units[row][col]);
     }
 
     this.checkWinning = function () {

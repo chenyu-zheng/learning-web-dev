@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" ondragstart="return false;">
         <h1 class="title">Minesweeper</h1>
         <div class="menu">
             <div class="counter-mine">
@@ -22,13 +22,13 @@
             <button id="button-start" class="button-start">
                 <img src="img/face-smile-48x48x32.png">
             </button>
-            <form class="levels">
-                <input type="radio" name="level" id="level-easy" value="easy">
+            <form id="level-selector" class="level-selector">
+                <input type="radio" name="level" id="level-easy" value="easy" checked>
                 <label for="level-easy">Easy</label>
                 <input type="radio" name="level" id="level-normal" value="normal">
-                <label for="level-normal">Easy</label>
+                <label for="level-normal">Normal</label>
                 <input type="radio" name="level" id="level-hard" value="hard">
-                <label for="level-hard">Easy</label>
+                <label for="level-hard">Hard</label>
             </form>
         </div>
         <table id="game-table" class="game-table" oncontextmenu="return false;">
