@@ -11,7 +11,7 @@ resetCanvas();
 
 
 
-function resetCanvas () {
+function resetCanvas() {
 
     const height = parseInt(inputHeight.value);
     const width = parseInt(inputWidth.value);
@@ -30,10 +30,9 @@ function resetCanvas () {
 }
 
 
-function updatePixel (evt) {
-    if (evt.target.tagName !== "TD") return;
-    const y = evt.target.parentNode.getAttribute("y");
-    const x = evt.target.getAttribute("x");
-    const td = canvas.querySelector(`tr[y="${y}"] td[x="${x}"]`);
-    td.style.backgroundColor = colorPicker.value;
+function updatePixel(evt) {
+
+    if (evt.target.tagName === "TD") {
+        evt.target.style.backgroundColor = colorPicker.value;
+    }
 }
