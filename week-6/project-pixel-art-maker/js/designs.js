@@ -10,20 +10,18 @@ resetButton.addEventListener("click", resetCanvas);
 resetCanvas();
 
 
-
 function resetCanvas() {
-
-    const height = parseInt(inputHeight.value);
-    const width = parseInt(inputWidth.value);
 
     let tblHtml = "";
 
-    for (let i = 0; i < height; i++) {
-        tblHtml += `<tr y="${i}">`
-        for (let j = 0; j < width; j++) {
-            tblHtml += `<td x="${j}"></td>`
+    for (let i = 0; i < inputHeight.value; i++) {
+        tblHtml += "<tr>";
+
+        for (let j = 0; j < inputWidth.value; j++) {
+            tblHtml += "<td></td>";
         }
-        tblHtml += "</tr>"
+
+        tblHtml += "</tr>";
     }
 
     canvas.innerHTML = tblHtml;
