@@ -1,6 +1,6 @@
 # Visual Studio Code
 Visual Studio Code is a source code editor developed by Microsoft for Windows, Mac, and Linux. It is free, customizable, and open-source.
-![VS Code](vscode.png)
+![VS Code](vscode.jpg)
 
 ## Installation
 1. Download [Visual Studio Code installer](https://go.microsoft.com/fwlink/?LinkID=534107)
